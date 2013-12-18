@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>PhonyWeb</title>
+
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/foundation.css">
+  <link href='http://fonts.googleapis.com/css?family=Crete+Round|Peralta' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Cantata+One' rel='stylesheet' type='text/css'>
+  <link href="/css/index.css" rel="stylesheet">
+
+  <script src="/js/lib/custom.modernizr.js"></script>
+  
+</head>
+<body>
+
+  <div id="topbar-wrapper" class="fixed contain-to-grid">
+    <nav class="top-bar" data-topbar >
+      <ul class="title-area">
+        <li class="name"><h1><a href="/">PhonyWeb</a></h1></li>
+      </ul>
+
+      <section class="top-bar-section">
+        <ul class="left">
+          <li class="divider"></li>
+          <li class="has-dropdown"><a id="contacts-btn" href="#">Contacts</a>
+            <ul class="dropdown" data-dropdown-content>
+              <li><a id='google-contacts-btn' href="#">Google Contacts</a></li>
+              <li><a id='csv-contacts-btn' href="#">CSV Contacts</a></li>
+            </ul>
+          </li>
+          <li class="divider"></li>
+          <li class="has-dropdown"><a id='messages-btn' href="#">Messages</a>
+            <ul class="dropdown" data-dropdown-content>
+              <li><a id='messages-inbox-btn' href="#">Inbox</a></li>
+              <li><a id='messages-sent-btn' href="#">Sent Items</a></li>
+              <li><a id='messages-draft-btn' href="#">Draft</a></li>
+            </ul>
+          </li>
+          <li class="divider"></li>
+          <li><a id='billing-btn' href="#" >Billing</a></li>
+          <li class="divider"></li> 
+          <li class="has-form"><a id='record-message-btn' href="#" class="button">Record </a></li>           
+        </ul>
+
+        <ul class="right">
+          <li><a id='logout-btn' href="/user_logout" class="button">Logout</a></li>
+        </ul>
+      </section>
+    </nav>
+  </div>
+
+  <div id="page" class="row">
+    <div class="large-12 columns">
+
+      <div id="header-wrapper">
+
+      </div>
+
+      <div id="div-wrapper">
+
+      </div>
+
+      <div id="ul-wrapper">
+
+      </div>
+    </div> 
+  </div>
+
+  <!-- <footer class="container">
+    <div id="footer" class="large-12 columns">
+      <div class="row">
+        <div class="large-6 columns">
+          <p>&copy; PhonyWeb</p>
+        </div>
+        <div class="large-6 small-12 columns">
+          
+        </div>
+      </div>
+    </div>
+  </footer> -->
+
+  <script>
+  document.write('<script src=\/js\/lib\/' +
+  ('__proto__' in {} ? 'zepto' : 'jquery') +
+  '.js><\/script>')
+  </script>
+  <script src="/js/lib/jquery.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/foundation.min.js"></script>
+  <script src="/js/lib/jquery.cookies.2.2.0.min.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+
+  <script id="contact-template" type="text/template">
+    <div class="row contact-row">
+      
+    </div>
+    <h4></h4>
+    </hr>
+  </script>
+
+
+  <script src="/js/model/model.js"></script>
+  <script src="/js/collection/collection.js"></script>
+  <script src="/js/view/view.js"></script>
+  <script src="/js/router/router.js"></script>
+
+</body>
+</html>

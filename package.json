@@ -1,0 +1,22 @@
+{
+  "name": "phony_web",
+  "version": "0.0.0",
+  "description": "phony_web ====",
+  "main": "web.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zimuzostanley/phony_web.git"
+  },
+  "author": "Zim",
+  "bugs": {
+    "url": "https://github.com/zimuzostanley/phony_web/issues"
+  },
+  "dependencies": {
+    "express": "~3.3.4",
+    "ejs": "~0.8.4",
+    "path": "~0.4.9",
+    "mongodb": "~1.3.23",
+    "mongoose": "~3.8.2",
+    "everyauth": "~0.4.5"
+  }
+}
