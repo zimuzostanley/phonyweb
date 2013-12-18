@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-if (process.env.MONGOHQ_URL) {
-	mongoose.connect(process.env.MONGOHQ_URL);
-}
-else {
+// if (process.env.MONGOHQ_URL) {
+// 	mongoose.connect(process.env.MONGOHQ_URL);
+// }
+// else {
 	mongoose.connect('mongodb://local.host/phonyweb');
-}
+//}
 
 exports.db = mongoose.connection;
 var contactSchema = mongoose.Schema({
