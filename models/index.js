@@ -5,7 +5,7 @@ if (process.env.MONGOHQ_URL) {
 	mongoose.connect(process.env.MONGOHQ_URL);
 }
 else {
-	mongoose.connect('mongodb://local.host/phonyweb');
+	mongoose.connect('mongodb://localhost/phonyweb');
 }
 
 exports.db = mongoose.connection;

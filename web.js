@@ -46,10 +46,15 @@ app.configure('development', function() {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
-	app.use(express.logger());
+	//app.use(express.logger());
 	app.use(express.favicon());
 	app.use(express.cookieParser('My mothers maiden name'));
-	app.use(express.session());
+	app.use(express.session({
+		store: new MongoStore({
+			url: 'mongodb://localhost/phonyweb'
+		}),
+		secret: 'My mothers maiden name'
+	}));
 	app.use(everyauth.middleware());
 	app.use(app.router);
 	app.use(express.favicon(path.join(__dirname, 'public/img/favicon.jpg')));
@@ -62,11 +67,11 @@ app.configure('production', function() {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
-	app.use(express.logger());
+	//app.use(express.logger());
 	app.use(express.favicon());
 	
 	app.use(express.cookieParser('My mothers maiden name'));
-	app.use(express.session());
+	
 	app.use(everyauth.middleware());
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
@@ -111,6 +116,15 @@ phonyWebDb.db.on('error', console.error.bind(console, 'connection error:'));
 phonyWebDb.db.once('open', initialize);
 
 function initialize() {
+	if (app.get('env') == 'production') {
+		app.use(express.session({
+			store: new MongoStore({
+				url: process.env.MONGOHQ_URL
+			}),
+			secret: 'My mothers maiden name'
+		}));
+	}
+	
 	http.createServer(app).listen(app.get('port'), function() {
 		console.log('Express server listening on port ' + app.get('port'));
 	});
