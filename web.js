@@ -73,7 +73,7 @@ app.configure('production', function() {
 	app.use(express.cookieParser('My mothers maiden name'));
 	app.use(express.session({
 		store: new MongoStore({
-			url: 'mongodb://localhost/phonyweb'
+			url: process.env.MONGOHQ_URL
 		}),
 		secret: 'My mothers maiden name'
 	}));
