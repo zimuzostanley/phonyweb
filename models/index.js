@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 if (process.env.MONGOHQ_URL) {
-	mongoose.connect(MONGOHQ_URL);
+	mongoose.connect(process.env.MONGOHQ_URL);
 }
 else {
 	mongoose.connect('mongodb://local.host/phonyweb');
