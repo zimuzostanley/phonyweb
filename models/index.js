@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-// if (process.env.MONGOHQ_URL) {
-// 	mongoose.connect(MONGOHQ_URL);
-// }
-// else {
-	mongoose.connect('mongodb://heroku:180ff038cc0641ef8745baf51c3c51ad@paulo.mongohq.com:10009/app20466087');
-//}
+if (process.env.MONGOHQ_URL) {
+	mongoose.connect(MONGOHQ_URL);
+}
+else {
+	mongoose.connect('mongodb://local.host/phonyweb');
+}
 
 exports.db = mongoose.connection;
 var contactSchema = mongoose.Schema({

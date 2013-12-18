@@ -8,8 +8,6 @@ var MongoStore = require('connect-mongo')(express);
 var everyauth = require('everyauth');
 var ROUTES = require('./routes');
 
-MONGOHQ_URL
-
 everyauth.debug = true;
 
 everyauth.google
