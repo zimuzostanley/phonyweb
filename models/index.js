@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
 if (process.env.MONGOHQ_URL) {
-	mongoose.connect(process.env.MONGOHQ_URL);
+	console.log(process.env.MONGOHQ_URL);
+	mongoose.connect('mongodb://heroku:8fe0e3b4ff8b4d35236a02ebf8348753@paulo.mongohq.com:10009/app20466087');
 }
 else {
 	mongoose.connect('mongodb://local.host/phonyweb');
