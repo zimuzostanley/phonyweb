@@ -49,12 +49,12 @@ app.configure('development', function() {
 	//app.use(express.logger());
 	app.use(express.favicon());
 	app.use(express.cookieParser('My mothers maiden name'));
-	app.use(express.session({
-		store: new MongoStore({
-			url: 'mongodb://localhost/phonyweb'
-		}),
-		secret: 'My mothers maiden name'
-	}));
+	// app.use(express.session({
+	// 	store: new MongoStore({
+	// 		url: 'mongodb://localhost/phonyweb'
+	// 	}),
+	// 	secret: 'My mothers maiden name'
+	// }));
 	app.use(everyauth.middleware());
 	app.use(app.router);
 	app.use(express.favicon(path.join(__dirname, 'public/img/favicon.jpg')));
@@ -71,12 +71,12 @@ app.configure('production', function() {
 	app.use(express.favicon());
 	
 	app.use(express.cookieParser('My mothers maiden name'));
-	// app.use(express.session({
-	// 	store: new MongoStore({
-	// 		url: process.env.MONGOHQ_URL
-	// 	}),
-	// 	secret: 'My mothers maiden name'
-	// }));
+	app.use(express.session({
+		store: new MongoStore({
+			url: process.env.MONGOHQ_URL
+		}),
+		secret: 'My mothers maiden name'
+	}));
 	app.use(everyauth.middleware());
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
