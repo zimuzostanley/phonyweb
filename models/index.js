@@ -10,7 +10,8 @@ else {
 
 exports.db = mongoose.connection;
 var contactSchema = mongoose.Schema({
-	id: String,
+	facebook_id: String,
+	google_id: String,
 	username: String,
 	password: String,
 	category: String,

@@ -8,12 +8,12 @@ function indexfn(req, res) {
 	db.Bill.find(function(err, bill) {
 		console.log(bill);
 	});
-	var loggedIn = true;
-	if(loggedIn) {
-		res.render('login', {});
+	console.log(req.user);
+	if(req.loggedIn) {
+		res.render('index', {});
 	}
 	else {
-		res.render('index', {});
+		res.render('login', {});
 	}
 	
 };

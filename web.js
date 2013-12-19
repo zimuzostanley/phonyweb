@@ -6,9 +6,21 @@ var phonyWebDb = require('./models/index.js');
 var conf = require('./config.js');
 var MongoStore = require('connect-mongo')(express);
 var everyauth = require('everyauth');
+var util = require('util');
 var ROUTES = require('./routes');
 
 everyauth.debug = true;
+
+everyauth.everymodule.findUserById(function(userId, callback) {
+	phonyweb.Contact.findById(userId, function(err, contact) {
+		callback(null, user);
+	});
+});
+
+// var findOrCreateFBUser = function(session, accessToken, accessTokExtra, fbUserMetadata) {
+// 	var promise = this.Promise();
+// 	phonyweb.Contact.findOne({facebook_id: fbUserMetadata.id})
+// }
 
 everyauth.google
   	.appId(conf.google.clientId)
@@ -17,7 +29,7 @@ everyauth.google
   	.findOrCreateUser( function (sess, accessToken, extra, googleUser) {
     	googleUser.refreshToken = extra.refresh_token;
     	googleUser.expiresIn = extra.expires_in;
-    	console.log(googleUser);
+    	console.log(util.inspect(googleUser));
     	//return usersByGoogleId[googleUser.id] || (usersByGoogleId[googleUser.id] = addUser('google', googleUser));
   	})
   	.redirectPath('/');
@@ -34,11 +46,11 @@ everyauth.google
     // view notifying the user that their authentication failed and why.
 	console.log('auth failed');
 	})
-	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadat) {
+	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 		//find or create user logic here
-		console.log(fbUserMetadat);
+		console.log(util.inspect(fbUserMetadata));
 	})
-	.redirectPath('http://phonyweb.com');
+	.redirectPath('/');
 
 var app = express();
 
