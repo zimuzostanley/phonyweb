@@ -71,7 +71,12 @@ app.configure('production', function() {
 	app.use(express.favicon());
 	
 	app.use(express.cookieParser('My mothers maiden name'));
-	
+	app.use(express.session({
+		store: new MongoStore({
+			url: process.env.MONGOHQ_URL
+		}),
+		secret: 'My mothers maiden name'
+	}));
 	app.use(everyauth.middleware());
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
@@ -91,39 +96,10 @@ for(var ii in ROUTES) {
     app.all(ROUTES[ii].path, ROUTES[ii].fn);
 }
 
-
-// app.get('/twitter_login', function(req, res) {
-// 	res.render('index', {});
-// });
-
-// app.get('/bill', function(req, res) {
-// 	phonyWebDb.Bill.find({ message_response_id: /^yo/ }, function(err, bill) {
-// 		res.send(bill);
-// 	});
-// });
-
-// app.get('/', function(req, res) {
-// 	// var bills = [];
-// 	// phonyWebDb.Bill.find({ message_response_id: /^you/}, function(err, bill) {
-//  // 		bills.push(bill);
-//  // 		console.log(bill);
-//  // 	});
-// 	console.log(req.session)
-// 	res.render('login', {});
-// });
-
 phonyWebDb.db.on('error', console.error.bind(console, 'connection error:'));
 phonyWebDb.db.once('open', initialize);
 
 function initialize() {
-	if (app.get('env') == 'production') {
-		app.use(express.session({
-			store: new MongoStore({
-				url: process.env.MONGOHQ_URL
-			}),
-			secret: 'My mothers maiden name'
-		}));
-	}
 	
 	http.createServer(app).listen(app.get('port'), function() {
 		console.log('Express server listening on port ' + app.get('port'));
