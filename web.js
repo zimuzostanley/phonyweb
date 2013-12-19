@@ -12,7 +12,7 @@ var ROUTES = require('./routes');
 everyauth.debug = true;
 
 everyauth.everymodule.findUserById(function(userId, callback) {
-	phonyweb.User.findById(userId, function(err, user) {
+	phonyWebDb.User.findById(userId, function(err, user) {
 		console.log("In find by id");
 		if (err) {
 			return callback(err);
@@ -54,11 +54,11 @@ everyauth.google
 		var promise = this.Promise();
 		console.log("in facebook");
 		console.log(util.inspect(fbUserMetadata.id));
- 		phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
+ 		phonyWebDb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
 
  			if (!user) {
  				console.log('new user');
- 				phonyweb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
+ 				phonyWebDb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
  					console.log('In insert fb user');
  					if(err) {
  						console.log("in db Error");
