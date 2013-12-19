@@ -51,6 +51,7 @@ everyauth.google
 	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 		//find or create user logic here
 		//var promise = this.Promise();
+		console.log("in facebook");
 		console.log(util.inspect(fbUserMetadata));
  		// phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
 
