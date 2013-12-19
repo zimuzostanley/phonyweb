@@ -39,15 +39,7 @@ everyauth.google
  everyauth.facebook
 	.appId(conf.fb.appId)
 	.appSecret(conf.fb.appSecret)
-	.handleAuthCallbackError( function(req, res) {
-		// If a user denies your app, Facebook will redirect the user to
-    // /auth/facebook/callback?error_reason=user_denied&error=access_denied&error_description=The+user+denied+your+request.
-    // This configurable route handler defines how you want to respond to
-    // that.
-    // If you do not configure this, everyauth renders a default fallback
-    // view notifying the user that their authentication failed and why.
-	console.log('auth failed');
-	})
+	.scope('email')
 	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 		//find or create user logic here
 		var promise = this.Promise();
@@ -89,6 +81,9 @@ everyauth.google
 		return promise;
 		
 	})
+	.handleAuthCallbackError( function (req, res) {
+        res.send('AuthCallback error occurred');
+    })
 	.redirectPath('/');
 
 var app = express();
