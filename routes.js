@@ -11,7 +11,6 @@ function indexfn(req, res) {
 	console.log('User indexfn');
 	console.log(req.user);
 	if(req.loggedIn) {
-		console.log(req.session.auth.fb.accessToken);
 		res.render('index', {});
 	}
 	else {

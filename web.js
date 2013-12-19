@@ -32,7 +32,36 @@ everyauth.google
     	googleUser.refreshToken = extra.refresh_token;
     	googleUser.expiresIn = extra.expires_in;
     	console.log(util.inspect(googleUser));
-    	//return usersByGoogleId[googleUser.id] || (usersByGoogleId[googleUser.id] = addUser('google', googleUser));
+    	var promise = this.Promise();
+		console.log("in google");
+		console.log(accessToken);
+ 		phonyWebDb.User.findOne({google_id: googleUser.id}, function(err, user) {
+ 			if (!user) {
+ 				console.log('new user');
+ 				var usergoogle = new phonyWebDb.User({google_id: googleUser.id});
+ 				usergoogle.save(function(err, ok) {
+ 					console.log('In insert fb user');
+ 					if(err) {
+ 						console.log("in db Error");
+ 						promise.fail('db error');
+ 					}
+ 					else {
+ 						promise.fulfill(usergoogle);
+ 						console.log('in first fulfill user');
+ 					}
+ 				});
+ 			}
+ 			else if (user) {
+ 				console.log('old user');
+ 				if (user.blacklisted == true) {
+ 					return promise.fail('denied');
+ 				}
+ 				console.log('In second fulfill user');
+ 				promise.fulfill(user);
+ 				
+ 			}
+ 		});
+		return promise;
   	})
   	.redirectPath('/');
 
@@ -46,7 +75,7 @@ everyauth.google
 		console.log("in facebook");
 		console.log(accessToken);
 		console.log(util.inspect(fbUserMetadata));
- 		phonyWebDb.User.findOne({email: fbUserMetadata.email}, function(err, user) {
+ 		phonyWebDb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
  			if (!user) {
  				console.log('new user');
  				var userfb = new phonyWebDb.User({facebook_id: fbUserMetadata.id});
@@ -67,15 +96,8 @@ everyauth.google
  				if (user.blacklisted == true) {
  					return promise.fail('denied');
  				}
- 				phonyWebDb.User.update({ email: user.email }, {facebook_id: fbUserMetadata.id}, function(err, user) {
- 					if(err) {
- 						return promise.fail('User conflict');
- 					}
- 					else {
- 						console.log('In second fulfill user');
- 						promise.fulfill(user);
- 					}
- 				});
+ 				console.log('In second fulfill user');
+ 				promise.fulfill(user);
  				
  			}
  		});
