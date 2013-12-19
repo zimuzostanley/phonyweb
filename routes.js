@@ -8,7 +8,9 @@ function indexfn(req, res) {
 	// db.Bill.find(function(err, bill) {
 	// 	console.log(bill);
 	// });
+	console.log('User indexfn');
 	console.log(req.user);
+	console.log(req.session.auth.fb.accessToken);
 	if(req.loggedIn) {
 		res.render('index', {});
 	}

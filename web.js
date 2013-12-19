@@ -44,6 +44,7 @@ everyauth.google
 		//find or create user logic here
 		var promise = this.Promise();
 		console.log("in facebook");
+		console.log(accessToken);
 		console.log(util.inspect(fbUserMetadata));
  		phonyWebDb.User.findOne({email: fbUserMetadata.email}, function(err, user) {
  			if (!user) {
