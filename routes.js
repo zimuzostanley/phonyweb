@@ -2,6 +2,12 @@ var db = require('./models/index.js');
 var uu = require('underscore');
 
 function indexfn(req, res) {
+
+	var bill = db.Bill({cost: 53});
+	bill.save();
+	db.Bill.find(function(err, bill) {
+		console.log(bill);
+	});
 	var loggedIn = true;
 	if(loggedIn) {
 		res.render('login', {});
