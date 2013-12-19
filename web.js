@@ -12,7 +12,6 @@ var ROUTES = require('./routes');
 everyauth.debug = true;
 
 everyauth.everymodule.findUserById(function(userId, callback) {
-	console.log(userId);
 	phonyWebDb.User.findById(userId, function(err, user) {
 		if (err) {
 			return callback(err);
@@ -55,7 +54,6 @@ everyauth.google
 		console.log("in facebook");
 		console.log(util.inspect(fbUserMetadata));
  		phonyWebDb.User.findOne({email: fbUserMetadata.email}, function(err, user) {
-
  			if (!user) {
  				console.log('new user');
  				var userfb = new phonyWebDb.User({facebook_id: fbUserMetadata.id});
@@ -76,11 +74,18 @@ everyauth.google
  				if (user.blacklisted == true) {
  					return promise.fail('denied');
  				}
- 				console.log('In second fulfill user');
- 				promise.fulfill(user);
+ 				phonyWebDb.User.update({ email: user.email }, {facebook_id: fbUserMetadata.id}, function(err, user) {
+ 					if(err) {
+ 						return promise.fail('User conflict');
+ 					}
+ 					else {
+ 						console.log('In second fulfill user');
+ 						promise.fulfill(user);
+ 					}
+ 				});
+ 				
  			}
  		});
- 		console.log('before return promise');
 		return promise;
 		
 	})
