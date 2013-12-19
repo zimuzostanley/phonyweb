@@ -52,7 +52,7 @@ everyauth.google
 		//find or create user logic here
 		//var promise = this.Promise();
 		console.log("in facebook");
-		console.log(util.inspect(fbUserMetadata));
+		console.log(util.inspect(fbUserMetadata.id));
  		// phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
 
  		// 	if (!user) {
