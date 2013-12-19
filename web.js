@@ -12,8 +12,8 @@ var ROUTES = require('./routes');
 everyauth.debug = true;
 
 everyauth.everymodule.findUserById(function(userId, callback) {
+	console.log(userId);
 	phonyWebDb.User.findById(userId, function(err, user) {
-		console.log("In find by id");
 		if (err) {
 			return callback(err);
 		}
@@ -53,8 +53,8 @@ everyauth.google
 		//find or create user logic here
 		var promise = this.Promise();
 		console.log("in facebook");
-		console.log(util.inspect(fbUserMetadata.id));
- 		phonyWebDb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
+		console.log(util.inspect(fbUserMetadata));
+ 		phonyWebDb.User.findOne({email: fbUserMetadata.email}, function(err, user) {
 
  			if (!user) {
  				console.log('new user');
