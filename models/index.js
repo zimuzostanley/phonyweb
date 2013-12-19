@@ -8,12 +8,21 @@ else {
 	mongoose.connect('mongodb://localhost/phonyweb');
 }
 
-exports.db = mongoose.connection;
-var contactSchema = mongoose.Schema({
+var userSchema = mongoose.Schema({
 	facebook_id: String,
 	google_id: String,
 	username: String,
-	password: String,
+	email: String
+});
+
+exports.User = mongoose.model('User', userSchema);
+
+exports.db = mongoose.connection;
+var contactSchema = mongoose.Schema({
+	first_name: String,
+	last_name: String,
+	owner_fb_id: String,
+	owner_google_id: String,
 	category: String,
 	mobile_number: String
 });
@@ -30,7 +39,6 @@ var messageSchema = mongoose.Schema({
 });
 
 exports.Message = mongoose.model('Message', messageSchema);
-
 
 var billSchema = mongoose.Schema({
 	cost: Number,

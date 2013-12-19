@@ -12,14 +12,16 @@ var ROUTES = require('./routes');
 everyauth.debug = true;
 
 everyauth.everymodule.findUserById(function(userId, callback) {
-	phonyweb.Contact.findById(userId, function(err, contact) {
+	phonyweb.User.findById(userId, function(err, user) {
+		if (err) {
+			return callback(err);
+		}
 		callback(null, user);
 	});
 });
 
 // var findOrCreateFBUser = function(session, accessToken, accessTokExtra, fbUserMetadata) {
-// 	var promise = this.Promise();
-// 	phonyweb.Contact.findOne({facebook_id: fbUserMetadata.id})
+// 	
 // }
 
 everyauth.google
@@ -48,6 +50,29 @@ everyauth.google
 	})
 	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 		//find or create user logic here
+		var promise = this.Promise();
+ 		phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
+ 			if (!user) {
+ 				console.log('new user');
+ 				phonyweb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
+ 					if(err) {
+ 						console.log("Error");
+ 						promise.fail('db error');
+ 					}
+ 					else {
+ 						promise.fulfill(user);
+ 					}
+ 				});
+ 			}
+ 			else if (user) {
+ 				console.log('old user');
+ 				if (user.blacklisted == true) {
+ 					return promise.fail('denied');
+ 				}
+ 				promise.fulfill(user);
+ 			}
+ 		});
+		return promise;
 		console.log(util.inspect(fbUserMetadata));
 	})
 	.redirectPath('/');
