@@ -54,29 +54,32 @@ everyauth.google
 		var promise = this.Promise();
 		console.log("in facebook");
 		console.log(util.inspect(fbUserMetadata.id));
- 		// phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
+ 		phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
 
- 		// 	if (!user) {
- 		// 		console.log('new user');
- 		// 		phonyweb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
- 		// 			if(err) {
- 		// 				console.log("Error");
- 		// 				promise.fail('db error');
- 		// 			}
- 		// 			else {
- 		// 				promise.fulfill(user);
- 		// 			}
- 		// 		});
- 		// 	}
- 		// 	else if (user) {
- 		// 		console.log('old user');
- 		// 		if (user.blacklisted == true) {
- 		// 			return promise.fail('denied');
- 		// 		}
- 		// 		promise.fulfill(user);
- 		// 	}
- 		// });
-
+ 			if (!user) {
+ 				console.log('new user');
+ 				phonyweb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
+ 					console.log('In insert fb user');
+ 					if(err) {
+ 						console.log("in db Error");
+ 						promise.fail('db error');
+ 					}
+ 					else {
+ 						promise.fulfill(user);
+ 						console.log('in first fulfill user');
+ 					}
+ 				});
+ 			}
+ 			else if (user) {
+ 				console.log('old user');
+ 				if (user.blacklisted == true) {
+ 					return promise.fail('denied');
+ 				}
+ 				console.log('In second fulfill user');
+ 				promise.fulfill(user);
+ 			}
+ 		});
+ 		console.log('before return promise');
 		return promise;
 		
 	})
