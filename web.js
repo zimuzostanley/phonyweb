@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
-var phonyWebDb = require('./models/index.js');
+var phonyWebDb = require('./model.js');
 var conf = require('./config.js');
 var MongoStore = require('connect-mongo')(express);
 var everyauth = require('everyauth');
@@ -13,6 +13,7 @@ everyauth.debug = true;
 
 everyauth.everymodule.findUserById(function(userId, callback) {
 	phonyweb.User.findById(userId, function(err, user) {
+		console.log("In find by id");
 		if (err) {
 			return callback(err);
 		}

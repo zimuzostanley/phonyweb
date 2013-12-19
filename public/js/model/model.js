@@ -7,7 +7,7 @@ app.Contact = Backbone.Model.extend({
 
 
 app.Message = Backbone.Model.extend({
-
+	
 });
 
 app.Bill = Backbone.Model.extend({

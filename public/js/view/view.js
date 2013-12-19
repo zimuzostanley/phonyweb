@@ -2,23 +2,28 @@ var app = app || {};
 //Contact
 
 app.ContactView = Backbone.View.extend({
-	el: 'li',
+	tagName: 'li',
+
+	className: 'contact-row',
 
 	template: _.template($('#contact-template').html()),
 
 	events: {
-		
+		'click .contact-row': compose
 	},
 
 	initialize: function() {
 		this.listenTo(this.model, 'change', this.render);
-		this.render();
 	},
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	},
+
+	compose: function() {
+		alert('To compose');
+	}
 
 });
 
@@ -35,8 +40,8 @@ app.ContactsView = Backbone.View.extend({
 		return this;
 	},
 
-	addOne: function(question_number) {
-		var view  = new app.QuestionNumberView({model: question_number});
+	addOne: function(contact) {
+		var view  = new app.ContactView({model: contact});
 		this.$el.append(view.render().el);
 	},
 

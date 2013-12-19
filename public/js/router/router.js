@@ -3,9 +3,7 @@ var PhonyWebRouter = Backbone.Router.extend({
 		"": "messagesInbox",
 		"inbox": "messagesInbox",
 		"sent": "messagesSent",
-		"draft": "messagesDraft",
-		"google_contacts": "googleContacts",
-		"csv_contacts": "csvContacts",
+		"contacts": "contacts",
 		"billing": "billing",
 		"*other": "error",
 	},
@@ -22,18 +20,13 @@ var PhonyWebRouter = Backbone.Router.extend({
 
 	},
 
-	googleContacts: function() {
-
-	},
-
-	csvContacts: function() {
+	contacts: function() {
 
 	},
 
 	billing: function() {
 
 	},
-
 
 	quiz_available: function() {
 		$('#questions-wrapper').css('display', 'none');

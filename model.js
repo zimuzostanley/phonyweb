@@ -21,9 +21,7 @@ exports.db = mongoose.connection;
 var contactSchema = mongoose.Schema({
 	first_name: String,
 	last_name: String,
-	owner_fb_id: String,
-	owner_google_id: String,
-	category: String,
+	owner_email: String,
 	mobile_number: String
 });
 
@@ -31,20 +29,22 @@ exports.Contact = mongoose.model('Contact', contactSchema);
 
 var messageSchema = mongoose.Schema({
 	response_id: String,
-	sender_name: String,
-	sender_mobile_number: String,
-	created: Date,
+	sender_email: String,
+	receiver_mobile_number: String,
+	text: String,
 	sent: Date,
-	received: Date,
+	received: Date
 });
 
 exports.Message = mongoose.model('Message', messageSchema);
 
 var billSchema = mongoose.Schema({
 	cost: Number,
-	message_response_id: String,
+	text: String,
+	owner_email: String,
+	recipient_first_name: String,
+	recipient_last_name: String,
 	recipient_mobile_number: String,
-	recipient_name: String,
 	created: Date,
 });
 
