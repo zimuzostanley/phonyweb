@@ -50,7 +50,7 @@ everyauth.google
 	})
 	.findOrCreateUser( function (session, accessToken, accessTokExtra, fbUserMetadata) {
 		//find or create user logic here
-		var promise = this.Promise();
+		//var promise = this.Promise();
 		console.log(util.inspect(fbUserMetadata));
  		// phonyweb.User.findOne({facebook_id: fbUserMetadata.id}, function(err, user) {
 
@@ -74,7 +74,8 @@ everyauth.google
  		// 		promise.fulfill(user);
  		// 	}
  		// });
-		return promise;
+
+		//return promise;
 		
 	})
 	.redirectPath('/');
