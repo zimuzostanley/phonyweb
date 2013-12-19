@@ -10,8 +10,8 @@ function indexfn(req, res) {
 	// });
 	console.log('User indexfn');
 	console.log(req.user);
-	console.log(req.session.auth.fb.accessToken);
 	if(req.loggedIn) {
+		console.log(req.session.auth.fb.accessToken);
 		res.render('index', {});
 	}
 	else {
