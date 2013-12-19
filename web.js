@@ -58,14 +58,15 @@ everyauth.google
 
  			if (!user) {
  				console.log('new user');
- 				phonyWebDb.User.insert({facebook_id: fbUserMetadata.id}, function(err, ok) {
+ 				var userfb = new phonyWebDb.User({facebook_id: fbUserMetadata.id});
+ 				userfb.save(function(err, ok) {
  					console.log('In insert fb user');
  					if(err) {
  						console.log("in db Error");
  						promise.fail('db error');
  					}
  					else {
- 						promise.fulfill(user);
+ 						promise.fulfill(userfb);
  						console.log('in first fulfill user');
  					}
  				});
