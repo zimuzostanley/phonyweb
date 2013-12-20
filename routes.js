@@ -105,6 +105,7 @@ function messagefn(req, res) {
 						res.send({status: 'ok'});
 					}
 				});
+				
 			}
 			else {
 				res.send({status: 'error'});
@@ -150,7 +151,7 @@ function contactfn(req, res) {
 		var mobile_number = req.param('mobile_number');
 
 		if (first_name && last_name && mobile_number) {
-			var contact = new db.Contact({first_name: first_name, last_name: last_name, mobile_number: mobile_number, owner_email: req.user.email });
+			var contact = new db.Contact({first_name: request.param('first_name'), last_name: request.param('last_name'), mobile_number: request.param('mobile_number'), owner_email: 'req.user.email' });
 			contact.save(function(err, contact) {
 				if (err) {
 					res.send({status: 'error'});

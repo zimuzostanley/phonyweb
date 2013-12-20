@@ -66,9 +66,9 @@ var ComposeView = Backbone.View.extend({
 		$('#compose-form').trigger('submit');
 		var message = new app.Message({mobile_number: mobile_number, text: text});
 		message.save({success: function() {
-			$('#recordModal').foundation('reveal', 'close');
-			console.log('returns success');
-		}, error: function() {
+				$('#recordModal').foundation('reveal', 'close');
+				console.log('returns success');
+			}, error: function() {
 
 		}});
 
