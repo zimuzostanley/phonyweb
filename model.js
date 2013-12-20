@@ -29,7 +29,7 @@ exports.Contact = mongoose.model('Contact', contactSchema);
 
 var messageSchema = mongoose.Schema({
 	response_id: String,
-	sender_email: String,
+	sender_id: String,
 	receiver_mobile_number: String,
 	text: String,
 	sent: Date,

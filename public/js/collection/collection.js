@@ -1,7 +1,8 @@
 var app = app || {};
 
 app.ContactList = Backbone.Collection.extend({
-	url: 'http://localhost:8000/quickquiz/question',
+	url: '/contact',
+
 
 	model: app.Contact,
 	
@@ -9,13 +10,13 @@ app.ContactList = Backbone.Collection.extend({
 
 
 app.MessageList = Backbone.Collection.extend({
-	url: 'http://localhost:8000/quickquiz/group/',
+	url: '/message',
 
 	model: app.Message,
 });
 
 app.BillList = Backbone.Collection.extend({
-	url: 'http://localhost:8000/quickquiz/group/',
+	url: '/bill',
 
 	model: app.Bill,
 });

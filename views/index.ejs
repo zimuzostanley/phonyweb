@@ -73,10 +73,10 @@
       <div id="recordModal" class="reveal-modal small" data-reveal>
         <h4>Compose voice message</h4>
 
-        <form>
+        <form id="compose-form" data-abide>
           <div class="row">
             <div class="columns small-12">
-              <textarea placeholder="Enter voice message as text"></textarea>
+              <textarea id="message-txtBx" placeholder="Enter voice message as text"></textarea>
             </div>
           </div>
 
@@ -88,23 +88,27 @@
 
           <div class="row">
             <div class="columns small-12">
-              <input type="text" placeholder="Mobile number">
+              <label><small>*required</small></label>
+              <input id="mobile-number-txtBx" type="text" placeholder="Mobile number" pattern="number" required>
+              <small class="error">You must enter a nigerian mobile number. E.g 08058113689</small>
             </div>
           </div>
 
           <div class="row">
             <div class="small-6 columns">
-              <input type="text" placeholder="First name">
+              <input id="first-name-txtBx" type="text" placeholder="First name" pattern="alpha_numeric" required>
+              <small class="error">You must enter a first name to save contact.</small>
             </div>
 
             <div class="small-6 columns">
-              <input type="text" placeholder="Last name">
+              <input id="last-name-txtBx" type="text" placeholder="Last name" pattern="alpha_numeric" required>
+              <small class="error">You must enter a last name to save contact.</small>
             </div>
           </div>
 
           <div class="row">
             <div class="columns small-12">
-              <a href="#" class="button small-12 columns">Send</a>
+              <a id="send-message-btn" href="#" class="button small-12 columns">Send</a>
             </div>
           </div>
         </form>

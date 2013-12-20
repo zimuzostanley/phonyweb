@@ -117,6 +117,7 @@ app.configure('development', function() {
 	app.set('view engine', 'ejs');
 	//app.use(express.logger());
 	app.use(express.favicon());
+	app.use(express.bodyParser());
 	app.use(express.cookieParser('My mothers maiden name'));
 	app.use(express.session({
 		store: new MongoStore({
@@ -138,7 +139,7 @@ app.configure('production', function() {
 	app.set('view engine', 'ejs');
 	//app.use(express.logger());
 	app.use(express.favicon());
-	
+	app.use(express.bodyParser());
 	app.use(express.cookieParser('My mothers maiden name'));
 	app.use(express.session({
 		store: new MongoStore({

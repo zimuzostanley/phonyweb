@@ -1,5 +1,37 @@
+var http = require('http');
+var querystring = require('querystring');
 var db = require('./model.js');
 var uu = require('underscore');
+var async = require('async');
+
+//im passing a reference to response so i can return responses to browser from here 
+function fonenode(path, method, headers, data, request, response, callback) {
+	var options = {
+		hostname: 'api.fonenode.com',
+		auth: '0cb8bbe4:DaOGCT1gFvd9dKIn',
+		path: path,
+		method: method,
+		headers: headers
+	};
+
+	var req = http.request(options, function(res) {
+		res.on('data', function(chunk) {
+			console.log('BODY ' + chunk);
+			error = JSON.parse(chunk).errors
+			if (error !== 0) {
+				console.log(error.length);
+				callback(request, response);
+			}
+		});
+	});
+
+	req.on('error', function(e) {
+		console.log('Problem with request' + e.message);
+		response.send({status: 'error'});
+	});
+	req.write(data);
+	req.end();
+}
 
 function indexfn(req, res) {
 
@@ -8,8 +40,8 @@ function indexfn(req, res) {
 	// db.Bill.find(function(err, bill) {
 	// 	console.log(bill);
 	// });
-	console.log('User indexfn');
-	console.log(req.user);
+	// console.log('User indexfn');
+	// console.log(req.user);
 	if(req.loggedIn) {
 		res.render('index', {});
 	}
@@ -26,6 +58,7 @@ function messagefn(req, res) {
 		//console.log(req.param('email'));
 		var email = req.param('email');
 		var mobile_number = req.param('mobile_number');
+
 
 
 		if (email) {
@@ -45,24 +78,40 @@ function messagefn(req, res) {
 
 	else if (req.route.method == 'post') {
 		var mobile_number = req.param('mobile_number');
-		var response_id = req.param('response_id');
 		var text = req.param('text');
 
-		if (mobile_number && response_id) {
-			//create a message using the current time and save in 'sent'
-			var message = new db.Message({response_id: response_id, sender_email: req.user.email, receiver_mobile_number: mobile_number, text: text, sent: new Date()})
-			message.save(function(err, message) {
-				if (err) {
-					res.send({status: 'error'});
-				}
-				else {
-					res.send({status: 'ok'});
-				}
-			});
+		console.log(mobile_number);
+		console.log(text);
+
+		var data = querystring.stringify({
+			'text': text,
+			'to': mobile_number
+		});
+
+		var headers = {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(data)
+		};
+
+		var callback = function(request, response) {
+			if (request.param('mobile_number') && request.param('text')) {
+				console.log('if works');
+				var message = new db.Message({sender_id: request.user.id, receiver_mobile_number: request.param('mobile_number'), text: request.param('text'), sent: new Date()})
+				message.save(function(err, message) {
+					if (err) {
+						res.send({status: 'error'});
+					}
+					else {
+						res.send({status: 'ok'});
+					}
+				});
+			}
+			else {
+				res.send({status: 'error'});
+			}
 		}
-		else {
-			res.send({status: 'error'});
-		}
+
+		fonenode('/v1/calls/quick', 'POST', headers, data, req, res, callback);		
 	}
 
 	else if (req.route.method == 'del') {

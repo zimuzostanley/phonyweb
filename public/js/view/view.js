@@ -9,7 +9,7 @@ app.ContactView = Backbone.View.extend({
 	template: _.template($('#contact-template').html()),
 
 	events: {
-		'click .contact-row': compose
+		'click .contact-row': 'compose'
 	},
 
 	initialize: function() {
@@ -50,3 +50,29 @@ app.ContactsView = Backbone.View.extend({
 	}
 	
 });
+
+var ComposeView = Backbone.View.extend({
+	el: '#recordModal',
+
+	events: {
+		'click #send-message-btn': 'sendMessage'
+	},
+
+	sendMessage: function() {
+		var mobile_number = $('#mobile-number-txtBx').val();
+		var text = $('#message-txtBx').val();
+		console.log(mobile_number);
+		console.log(text);
+		$('#compose-form').trigger('submit');
+		var message = new app.Message({mobile_number: mobile_number, text: text});
+		message.save({success: function() {
+			$('#recordModal').foundation('reveal', 'close');
+			console.log('returns success');
+		}, error: function() {
+
+		}});
+
+	}
+});
+
+app.ComposeView = new ComposeView;
