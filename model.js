@@ -12,6 +12,7 @@ var userSchema = mongoose.Schema({
 	facebook_id: String,
 	google_id: String,
 	username: String,
+	mobile_number: String,
 	email: String
 });
 
@@ -28,12 +29,12 @@ var contactSchema = mongoose.Schema({
 exports.Contact = mongoose.model('Contact', contactSchema);
 
 var messageSchema = mongoose.Schema({
-	response_id: String,
+	call_id: String,
 	sender_id: String,
+	sender_name: String,
 	receiver_mobile_number: String,
 	text: String,
 	sent: Date,
-	received: Date
 });
 
 exports.Message = mongoose.model('Message', messageSchema);

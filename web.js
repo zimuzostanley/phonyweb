@@ -114,7 +114,7 @@ var app = express();
 app.configure('development', function() {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
-	app.set('view engine', 'ejs');
+	//app.set('view engine', 'ejs');
 	//app.use(express.logger());
 	app.use(express.favicon());
 	app.use(express.bodyParser());
@@ -136,7 +136,7 @@ app.configure('development', function() {
 app.configure('production', function() {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
-	app.set('view engine', 'ejs');
+	//app.set('view engine', 'ejs');
 	//app.use(express.logger());
 	app.use(express.favicon());
 	app.use(express.bodyParser());

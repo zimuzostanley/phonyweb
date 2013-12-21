@@ -18,9 +18,9 @@ function fonenode(path, method, headers, data, request, response, callback) {
 		res.on('data', function(chunk) {
 			console.log('BODY ' + chunk);
 			error = JSON.parse(chunk).errors
-			if (error !== 0) {
-				console.log(error.length);
-				callback(request, response);
+			if (!error || error !== 0) {
+				//console.log(error.length);
+				callback(request, response, JSON.parse(chunk));
 			}
 		});
 	});
@@ -35,39 +35,35 @@ function fonenode(path, method, headers, data, request, response, callback) {
 
 function indexfn(req, res) {
 
-	// var bill = db.Bill({cost: 53});
-	// bill.save();
-	// db.Bill.find(function(err, bill) {
-	// 	console.log(bill);
-	// });
-	// console.log('User indexfn');
-	// console.log(req.user);
-	if(req.loggedIn) {
-		res.render('index', {});
-	}
-	else {
-		res.render('login', {});
-	}
-	
+
+	// if(req.loggedIn) {
+	// 	res.render('template/index.html', {});
+	// }
+	// else {
+	// 	res.render('template/login.html', {});
+	// }
+	res.sendfile('template/index.html', {});
 };
 
 
 function messagefn(req, res) {
 
 	if (req.route.method == 'get') {
-		//console.log(req.param('email'));
-		var email = req.param('email');
-		var mobile_number = req.param('mobile_number');
+		
+		var type = req.param('type');
 
+		if (type == 'outbox') {
+			db.Message.find({sender_id: 'req.user.id'}, function(err, message) {
 
-
-		if (email) {
-			db.Message.find({sender_email: req.user.email}, 'text', function(err, message) {
 				res.send(message);
 			});
 		}
-		else if (mobile_number) {
-			db.Message.find({receiver_mobile_number: mobile_number}, 'text', function(err, message) {
+		else if (type == 'inbox') {
+			//db.Message.find({receiver_mobile_number: 'req.user.mobile_number'}, 'text', function(err, message) {
+			db.Message.find({receiver_mobile_number: '08066595064'}, function(err, message) {
+				if (err) console.log(err);
+				console.log(message);
+				console.log('message');
 				res.send(message);
 			});
 		}
@@ -93,10 +89,10 @@ function messagefn(req, res) {
 			'Content-Length': Buffer.byteLength(data)
 		};
 
-		var callback = function(request, response) {
+		var callback = function(request, response, data) {
 			if (request.param('mobile_number') && request.param('text')) {
 				console.log('if works');
-				var message = new db.Message({sender_id: request.user.id, receiver_mobile_number: request.param('mobile_number'), text: request.param('text'), sent: new Date()})
+				var message = new db.Message({sender_id: 'request.user.id', receiver_mobile_number: request.param('mobile_number'), text: request.param('text'), sent: new Date()})
 				message.save(function(err, message) {
 					if (err) {
 						res.send({status: 'error'});
@@ -140,7 +136,7 @@ function messagefn(req, res) {
 
 function contactfn(req, res) {
 	if (req.route.method == 'get') {
-		db.Contact.find({owner_email: req.user.email}, function(err, contact) {
+		db.Contact.find({owner_email: 'req.user.email'}, function(err, contact) {
 			res.send(contact);
 		});
 	}
@@ -150,8 +146,9 @@ function contactfn(req, res) {
 		var last_name = req.param('last_name');
 		var mobile_number = req.param('mobile_number');
 
+
 		if (first_name && last_name && mobile_number) {
-			var contact = new db.Contact({first_name: request.param('first_name'), last_name: request.param('last_name'), mobile_number: request.param('mobile_number'), owner_email: 'req.user.email' });
+			var contact = new db.Contact({first_name: req.param('first_name'), last_name: req.param('last_name'), mobile_number: req.param('mobile_number'), owner_email: 'req.user.email' });
 			contact.save(function(err, contact) {
 				if (err) {
 					res.send({status: 'error'});
@@ -172,7 +169,7 @@ function contactfn(req, res) {
 		var last_name = req.param('last_name');
 
 		if (mobile_number) {
-			db.Contact.update({mobile_number: mobile_number, owner_email: req.user.email}, {first_name: first_name, last_name: last_name}, function(err, contact) {
+			db.Contact.update({mobile_number: mobile_number, id: 'req.user.id'}, {first_name: first_name, last_name: last_name}, function(err, contact) {
 				if(err) {
 					res.send({status: 'error'});
 				}
@@ -189,7 +186,7 @@ function contactfn(req, res) {
 	else if (req.route.method == 'del') {
 		var mobile_number = req.param('mobile_number');
 
-		db.Contact.remove({mobile_number: mobile_number}, function(err, contact) {
+		db.Contact.remove({mobile_number: mobile_number, id: 'req.user.id'}, function(err, contact) {
 			if(err) {
 				res.send({status: 'error'});
 			}
@@ -240,6 +237,16 @@ function billfn(req, res) {
 	}
 };
 
+function detailfn(req, res) {
+	if (req.route.method == 'get') {
+		var callback = function(request, response, data) {
+			response.send(data);
+		};
+		
+		fonenode('/v1/calls/'+req.param('call_id'), 'GET', '', '', req, res, callback);		
+	}
+}
+
 
 
 var define_route = function(dict) {
@@ -255,6 +262,7 @@ var ROUTES = define_route({
 	'/message/:response_id': messagefn,
 	'/contact': contactfn,
 	'/contact/:mobile_number': contactfn,
+	'/detail/:call_id': detailfn,
 	'/bill': billfn,
 });
 

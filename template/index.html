@@ -19,22 +19,67 @@
   
 </head>
 <body>
+ <!--  <nav class="tab-bar show-for-small">
+      <aside class="left-off-canvas-menu">
+        <ul>
+          <li><a href="#">Yes</a></li>
+        </ul>
+      </aside>
 
-  <div id="topbar-wrapper" class="fixed contain-to-grid">
-    <nav class="top-bar" data-topbar >
+      <a class="left-off-canvas-toggle menu-icon">
+        <span>PhonyWeb</span>
+      </a>
+      <a class="exit-off-canvas"></a>
+    </nav> -->
+
+  <div class="off-canvas-wrap">
+    <div class="inner-wrap">
+
+  <aside class="left-off-canvas-menu show-for-small">
+    <ul class="off-canvas-list">
+      <li><label class="first">Contacts</label></li>
+      <li><a href="#contacts">Contact List</a></li>
+    </ul>
+
+    <ul class="off-canvas-list">
+      <li><label class="first">Messages</label></li>
+      <li><a href="#inbox">Inbox</a></li>
+      <li><a href="#sent">Sent Items</a></li>
+      <li><a href="#" data-reveal-id="recordModal">Compose</a></li>
+    </ul>
+
+    <ul class="off-canvas-list">
+      <li><label class="first">Bills</label></li>
+      <li><a href="#">Bill</a></li>
+    </ul>
+
+    <ul class="off-canvas-list">
+      <li><label class="first">Username</label></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </aside>
+  <nav class="tab-bar show-for-small" data-topbar>
+    <a class="left-off-canvas-toggle menu-icon">
+      <span>PhonyWeb</span>
+    </a>
+  </nav>
+
+  <div id="topbar-wrapper" class="contain-to-grid hide-for-small">
+    <nav class="top-bar hide-for-small" data-topbar >
       <ul class="title-area">
         <li class="name"><h1><a href="/">PhonyWeb</a></h1></li>
       </ul>
 
       <section class="top-bar-section">
-        <ul class="left">
+        <ul class="left has-dropdown">
           <li class="divider"></li>
-          <li><a id="contacts-btn" href="#">Contacts</a></li>
+          <li><a id="contacts-btn" href="#contacts">Contacts</a></li>
           <li class="divider"></li>
           <li class="has-dropdown"><a id='messages-btn' href="#">Messages</a>
             <ul class="dropdown" data-dropdown-content>
-              <li><a id='messages-inbox-btn' href="#">Inbox</a></li>
-              <li><a id='messages-sent-btn' href="#">Sent Items</a></li>
+              <li><a id='messages-inbox-btn' href="#inbox">Inbox</a></li>
+              <li><a id='messages-sent-btn' href="#sent">Sent Items</a></li>
             </ul>
           </li>
           <li class="divider"></li>
@@ -58,17 +103,49 @@
   <div id="page" class="row">
     <div class="large-12 columns">
 
-      <div id="header-wrapper">
+      <h2 id="header-wrapper"></h2>
 
+      <div id="message-header" class="row" style="display: none;">
+        <div class="small-3 columns">
+          <span>Sender Name</span>
+        </div>
+
+        <div class="small-3 columns">
+          <span>Receiver Mobile</span>
+        </div>
+
+        <div class="small-3 columns">
+          <span>Date sent</span>
+        </div>
+        <div class="small-3 columns">
+          <span></span>
+        </div>
       </div>
 
-      <div id="div-wrapper">
+      <ul id="message-wrapper">
 
+      </ul>
+
+      <div id="contact-header" class="row" style="display: none;">
+        <div class="small-3 columns">
+          <span>First name</span>
+        </div>
+
+        <div class="small-3 columns">
+          <span>Last name</span>
+        </div>
+
+        <div class="small-3 columns">
+          <span>Mobile number</span>
+        </div>
+
+        <div class="small-3 columns">
+          <a href="#">Add contact</a>
+        </div>
       </div>
-
-      <div id="ul-wrapper">
-
-      </div>
+      <ul id="contact-wrapper">
+        
+      </ul>
 
       <div id="recordModal" class="reveal-modal small" data-reveal>
         <h4>Compose voice message</h4>
@@ -116,6 +193,9 @@
     </div> 
   </div>
 
+<a class="exit-off-canvas"></a>
+</div> 
+</div> <!-- end of off-canvas-wrap -->
   <!-- <footer class="container">
     <div id="footer" class="large-12 columns">
       <div class="row">
@@ -144,8 +224,46 @@
     $(document).foundation();
   </script>
 
+
   <script id="contact-template" type="text/template">
+    <div class="row">
+      <div class="small-3 columns">
+        <span><%= first_name %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <span><%= last_name %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <span><%= mobile_number %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <a class="send-message-row-btn" href="#contacts" data-reveal-id="recordModal">Send Voice Message</a>
+      </div>
+    </div>
     
+  </script>
+
+  <script id="message-template" type="text/template">
+    <div class="row">
+      <div class="small-3 columns">
+        <span><%= sender_name %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <span><%= receiver_mobile_number %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <span><%= sent %></span>
+      </div>
+
+      <div class="small-3 columns">
+        <a class="send-message-row-btn" href="#" >Check Status</a>
+      </div>
+    </div>
   </script>
 
 

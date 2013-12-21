@@ -1,11 +1,16 @@
 var app = app || {};
 
 app.Contact = Backbone.Model.extend({
-	url: '/contact',
+	urlRoot: '/contact',
 });
 
 
-app.Message = Backbone.Model.extend({
+app.Inbox = Backbone.Model.extend({
+	url: '/message',
+
+});
+
+app.Outbox = Backbone.Model.extend({
 	url: '/message',
 
 });
@@ -13,4 +18,8 @@ app.Message = Backbone.Model.extend({
 app.Bill = Backbone.Model.extend({
 	url: '/bill',
 
+});
+
+app.MessageDetail = Backbone.Model.extend({
+	url: '/detail',
 });
