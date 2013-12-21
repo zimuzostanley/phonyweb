@@ -54,7 +54,6 @@ app.ContactsView = Backbone.View.extend({
 
 	addOne: function(contact) {
 		var view  = new app.ContactView({model: contact});
-		//console.log(contact.toJSON());
 		this.$el.append(view.render().el);
 	},
 
@@ -97,9 +96,7 @@ app.MessagesInView = Backbone.View.extend({
 	initialize: function() {
 		
 		this.listenTo(app.Inboxes, 'all', this.render);
-		this.listenTo(app.Inboxes, 'add', this.addOne);
-		console.log('in initialize messages inbox view');
-		
+		this.listenTo(app.Inboxes, 'add', this.addOne);		
 	},
 
 	render: function() {
@@ -108,7 +105,6 @@ app.MessagesInView = Backbone.View.extend({
 
 	addOne: function(message) {
 		var view  = new app.MessageInView({model: message});
-		console.log(message.toJSON());
 		this.$el.append(view.render().el);
 	},
 
@@ -153,9 +149,7 @@ app.MessagesOutView = Backbone.View.extend({
 	initialize: function() {
 		
 		this.listenTo(app.Outboxes, 'all', this.render);
-		this.listenTo(app.Outboxes, 'add', this.addOne);
-		console.log('in initialize message outbox view');
-		
+		this.listenTo(app.Outboxes, 'add', this.addOne);		
 	},
 
 	render: function() {
@@ -163,7 +157,7 @@ app.MessagesOutView = Backbone.View.extend({
 	},
 
 	addOne: function(message) {
-		var view  = new app.MessagesOutView({model: message});
+		var view  = new app.MessageOutView({model: message});
 		this.$el.append(view.render().el);
 	},
 
@@ -175,11 +169,64 @@ app.MessagesOutView = Backbone.View.extend({
 
 app.messagesOutView = new app.MessagesOutView;
 
+app.BillView = Backbone.View.extend({
+	tagName: 'li',
+
+	className: 'bill-row',
+
+	template: _.template($('#bill-template').html()),
+
+	events: {
+		'click .message-row': 'compose'
+	},
+
+	initialize: function() {
+		this.listenTo(this.model, 'change', this.render);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+		return this;
+	},
+
+	compose: function() {
+		alert('To compose');
+	}
+
+});
+
+app.BillsView = Backbone.View.extend({
+	el: '#bill-wrapper',
+
+	initialize: function() {
+		
+		this.listenTo(app.Outboxes, 'all', this.render);
+		this.listenTo(app.Outboxes, 'add', this.addOne);		
+	},
+
+	render: function() {
+		return this;
+	},
+
+	addOne: function(bill) {
+		var view  = new app.Bills({model: bill});
+		this.$el.append(view.render().el);
+	},
+
+	empty: function() {
+		this.$el.empty();
+	}
+	
+});
+
+app.billsView = new app.BillsView;
+
 var ComposeView = Backbone.View.extend({
 	el: '#recordModal',
 
 	events: {
-		'click #send-message-btn': 'sendMessage'
+		'click #send-message-btn': 'sendMessage',
+		'click #import-csv-btn': 'importCSV'
 	},
 
 	sendMessage: function() {
@@ -219,6 +266,11 @@ var ComposeView = Backbone.View.extend({
 		}
 		
 		
+	},
+
+	importCSV: function() {
+		$('#recordModal').foundation('reveal', 'close');
+		alert('navigate to csv page');
 	}
 });
 

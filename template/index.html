@@ -49,8 +49,8 @@
     </ul>
 
     <ul class="off-canvas-list">
-      <li><label class="first">Bills</label></li>
-      <li><a href="#">Bill</a></li>
+      <li><label class="first">Billing</label></li>
+      <li><a href="#billing">Bill</a></li>
     </ul>
 
     <ul class="off-canvas-list">
@@ -83,7 +83,7 @@
             </ul>
           </li>
           <li class="divider"></li>
-          <li><a id='billing-btn' href="#" >Billing</a></li>
+          <li><a id='billing-btn' href="#billing" >Billing</a></li>
           <li class="divider"></li> 
           <li class="has-form"><a id='record-message-btn' href="#" class="button" data-reveal-id="recordModal">Compose </a></li>           
         </ul>
@@ -104,52 +104,101 @@
     <div class="large-12 columns">
 
       <h2 id="header-wrapper"></h2>
+      <hr>
 
-      <div id="message-header" class="row" style="display: none;">
-        <div class="small-3 columns">
-          <span>Sender Name</span>
-        </div>
+      
 
-        <div class="small-3 columns">
-          <span>Receiver Mobile</span>
-        </div>
+      <div class="row">
+        <div class="small-12 large-9 small-centered columns">
+          <div id="message-header" class="row" style="display: none;">
+            <div class="small-3 columns">
+              <span>Sender Name</span>
+            </div>
 
-        <div class="small-3 columns">
-          <span>Date sent</span>
-        </div>
-        <div class="small-3 columns">
-          <span></span>
-        </div>
-      </div>
+            <div class="small-3 columns">
+              <span>Receiver Mobile</span>
+            </div>
 
-      <ul id="message-wrapper">
+            <div class="small-3 columns">
+              <span>Date sent</span>
+            </div>
+            <div class="small-3 columns">
+              <span></span>
+            </div>
+          </div>
 
-      </ul>
-
-      <div id="contact-header" class="row" style="display: none;">
-        <div class="small-3 columns">
-          <span>First name</span>
-        </div>
-
-        <div class="small-3 columns">
-          <span>Last name</span>
-        </div>
-
-        <div class="small-3 columns">
-          <span>Mobile number</span>
-        </div>
-
-        <div class="small-3 columns">
-          <a href="#">Add contact</a>
-        </div>
-      </div>
-      <ul id="contact-wrapper">
+          <div class="row">
+            <ul id="message-wrapper" class="small-12 columns">
         
-      </ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="row">
+        <div class="small-12 large-9 small-centered columns">
+
+          <div id="contact-header" class="row" style="display: none;">
+            <div class="small-3 columns">
+              <span>First name</span>
+            </div>
+
+            <div class="small-3 columns">
+              <span>Last name</span>
+            </div>
+
+            <div class="small-3 columns">
+              <span>Mobile number</span>
+            </div>
+
+            <div class="small-3 columns">
+              <a href="#">Add contact</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <ul id="contact-wrapper" class="small-12 columns">
+        
+            </ul>
+          </div>
+        </div> 
+      </div>
+
+      <div class="row">
+        <div class="small-12 large-9 small-centered columns">
+
+          <div id="bill-header" class="row" style="display: none;">
+            <div class="small-3 columns">
+              <span>To</span>
+            </div>
+
+            <div class="small-3 columns">
+              <span>Duration</span>
+            </div>
+
+            <div class="small-3 columns">
+              <span>Cost</span>
+            </div>
+
+            <div class="small-3 columns">
+              <a href="#">Date</a>
+            </div>
+          </div>
+
+          <div class="row">
+            <ul id="bill-wrapper" class="small-12 columns">
+        
+            </ul>
+          </div>
+        </div> 
+      </div>
+      
 
       <div id="recordModal" class="reveal-modal small" data-reveal>
         <h4>Compose voice message</h4>
-
+        <hr>
         <form id="compose-form" data-abide>
           <div class="row">
             <div class="columns small-12">
@@ -158,36 +207,45 @@
           </div>
 
           <div class="row">
-            <div class="columns small-12">
-              <a href="#" class="button columns secondary dropdown">Contact List</a>
-            </div>
+            <div class="small-12 columns">
+              <fieldset>
+                <legend><a href="#">Send to one</small></legend>
+                <div class="row">
+                  <div class="columns small-12">
+                    <label><small>*required</small></label>
+                    <input id="mobile-number-txtBx" type="text" placeholder="Mobile number" pattern="[0-9]+" required>
+                    <small class="error">You must enter a nigerian mobile number. E.g 08058113689</small>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="small-6 columns">
+                    <input id="first-name-txtBx" type="text" placeholder="First name" pattern="alpha_numeric">
+                  </div>
+
+                  <div class="small-6 columns">
+                    <input id="last-name-txtBx" type="text" placeholder="Last name" pattern="alpha_numeric">
+                  </div>
+                </div>
+                <a id="send-message-btn" href="#" class="button small-12 columns">Send</a>
+              </fieldset>
+            </div> 
           </div>
 
           <div class="row">
-            <div class="columns small-12">
-              <label><small>*required</small></label>
-              <input id="mobile-number-txtBx" type="text" placeholder="Mobile number" pattern="number" required>
-              <small class="error">You must enter a nigerian mobile number. E.g 08058113689</small>
+            <div class="small-12 columns">
+              <fieldset>
+                <legend><a href="#">Send to many</a></legend>
+                <div class="small-6 columns">
+                  <label><small>*required</small></label>
+                  <input id="csv-fileBx" type="file" required>
+                  <small class="error">You must enter a first name to save contact.</small>
+                </div>
+                <a id="import-csv-btn" href="#" class="button small-12 columns">Import CSV</a>
+              </fieldset>
             </div>
           </div>
-
-          <div class="row">
-            <div class="small-6 columns">
-              <input id="first-name-txtBx" type="text" placeholder="First name" pattern="alpha_numeric" required>
-              <small class="error">You must enter a first name to save contact.</small>
-            </div>
-
-            <div class="small-6 columns">
-              <input id="last-name-txtBx" type="text" placeholder="Last name" pattern="alpha_numeric" required>
-              <small class="error">You must enter a last name to save contact.</small>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="columns small-12">
-              <a id="send-message-btn" href="#" class="button small-12 columns">Send</a>
-            </div>
-          </div>
+          
         </form>
       </div>
     </div> 
@@ -260,9 +318,22 @@
         <span><%= sent %></span>
       </div>
 
-      <div class="small-3 columns">
-        <a class="send-message-row-btn" href="#" >Check Status</a>
+      <div class="small-1 columns">
+        <a class="send-message-row-btn" href="#" data-dropdown="drop<%= call_id %>" >Text</a>
+        <ul id="drop<%= call_id %>" class="f-dropdown content" data-dropdown-content>
+          <li>yes</li>
+        </ul>
       </div>
+
+      <div class="small-1 columns">
+        <a class="send-message-row-btn" href="#" >Status</a>
+      </div>
+    </div>
+  </script>
+
+  <script id="bill-template" type="text/template">
+    <div class="row">
+      
     </div>
   </script>
 

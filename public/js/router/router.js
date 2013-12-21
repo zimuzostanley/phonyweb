@@ -13,6 +13,8 @@ var PhonyWebRouter = Backbone.Router.extend({
 		$('#contact-wrapper').css('display', 'none');
 		$('#message-header').css('display', 'block');
 		$('#message-wrapper').css('display', 'block');
+		$('#bill-header').css('display', 'none');
+		$('#bill-wrapper').css('display', 'none');
 		$('#header-wrapper').html('Inbox');
 		app.messagesInView.empty();
 		app.Inboxes.fetch({data: {type: 'inbox'}});
@@ -24,6 +26,8 @@ var PhonyWebRouter = Backbone.Router.extend({
 		$('#contact-wrapper').css('display', 'none');
 		$('#message-header').css('display', 'block');
 		$('#message-wrapper').css('display', 'block');
+		$('#bill-header').css('display', 'none');
+		$('#bill-wrapper').css('display', 'none');
 		$('#header-wrapper').html('Sent Items');
 		app.messagesOutView.empty();
 		app.Outboxes.fetch({data: {type: 'outbox'}});
@@ -34,6 +38,8 @@ var PhonyWebRouter = Backbone.Router.extend({
 		$('#message-wrapper').css('display', 'none');
 		$('#contact-header').css('display', 'block');
 		$('#contact-wrapper').css('display', 'block');
+		$('#bill-header').css('display', 'none');
+		$('#bill-wrapper').css('display', 'none');
 		$('#header-wrapper').html('Contact List');
 		app.contactsView.empty();
 		app.Contacts.fetch();
@@ -41,7 +47,13 @@ var PhonyWebRouter = Backbone.Router.extend({
 	},
 
 	billing: function() {
-
+		$('#message-header').css('display', 'none');
+		$('#message-wrapper').css('display', 'none');
+		$('#contact-header').css('display', 'none');
+		$('#contact-wrapper').css('display', 'none');
+		$('#bill-header').css('display', 'block');
+		$('#bill-wrapper').css('display', 'block');
+		$('#header-wrapper').html('Billing');
 	},
 
 	// quiz_available: function() {

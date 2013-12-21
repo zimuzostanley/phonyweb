@@ -20,10 +20,6 @@ everyauth.everymodule.findUserById(function(userId, callback) {
 	});
 });
 
-// var findOrCreateFBUser = function(session, accessToken, accessTokExtra, fbUserMetadata) {
-// 	
-// }
-
 everyauth.google
   	.appId(conf.google.clientId)
   	.appSecret(conf.google.clientSecret)

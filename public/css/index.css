@@ -6,27 +6,29 @@ h1 {
 	text-align: center;
 }
 
-
 #contact-wrapper, #message-wrapper {
 	list-style-type: none;
-	padding: 0px;
+	padding: 15px;
 	margin: 0px;
+	font-size: 14px;
 }
 
-.contact-row, .message-row {
+.contact-row, .message-row, .bill-row {
 	margin: 0px 20px;
-	padding: 25px;
-	border-bottom: 1px solid #ccc;
+	padding: 7px 15px;
 	cursor: pointer;
+	border: 1px solid #ccc;
+	border-bottom: none;
 }
 
-#contact-header, #message-header {
+#contact-header, #message-header, #bill-header {
 	margin: 0px 20px;
-	padding: 25px;
-	border-bottom: 1px solid #ccc;
+	padding: 15px;
+	border: 1px solid #ccc;
 	background-color: #F1F1F1;
+	margin-bottom: -20px;
 }
 
-.contact-row:hover {
+.contact-row:hover, .message-row:hover, .bill-row:hover {
 	background-color: #F7F7F7;
 }

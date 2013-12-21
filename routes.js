@@ -35,12 +35,11 @@ function fonenode(path, method, headers, data, request, response, callback) {
 
 function indexfn(req, res) {
 
-
 	// if(req.loggedIn) {
-	// 	res.render('template/index.html', {});
+	// 	res.sendfile('template/index.html', {});
 	// }
 	// else {
-	// 	res.render('template/login.html', {});
+	// 	res.sendfile('template/login.html', {});
 	// }
 	res.sendfile('template/index.html', {});
 };
@@ -53,7 +52,7 @@ function messagefn(req, res) {
 		var type = req.param('type');
 
 		if (type == 'outbox') {
-			db.Message.find({sender_id: 'req.user.id'}, function(err, message) {
+			db.Message.find({sender_id: req.user.id}, function(err, message) {
 
 				res.send(message);
 			});
@@ -92,7 +91,7 @@ function messagefn(req, res) {
 		var callback = function(request, response, data) {
 			if (request.param('mobile_number') && request.param('text')) {
 				console.log('if works');
-				var message = new db.Message({sender_id: 'request.user.id', receiver_mobile_number: request.param('mobile_number'), text: request.param('text'), sent: new Date()})
+				var message = new db.Message({sender_id: request.user.id, receiver_mobile_number: request.param('mobile_number'), text: request.param('text'), sent: new Date()})
 				message.save(function(err, message) {
 					if (err) {
 						res.send({status: 'error'});
@@ -169,7 +168,7 @@ function contactfn(req, res) {
 		var last_name = req.param('last_name');
 
 		if (mobile_number) {
-			db.Contact.update({mobile_number: mobile_number, id: 'req.user.id'}, {first_name: first_name, last_name: last_name}, function(err, contact) {
+			db.Contact.update({mobile_number: mobile_number, id: req.user.id}, {first_name: first_name, last_name: last_name}, function(err, contact) {
 				if(err) {
 					res.send({status: 'error'});
 				}
@@ -186,7 +185,7 @@ function contactfn(req, res) {
 	else if (req.route.method == 'del') {
 		var mobile_number = req.param('mobile_number');
 
-		db.Contact.remove({mobile_number: mobile_number, id: 'req.user.id'}, function(err, contact) {
+		db.Contact.remove({mobile_number: mobile_number, id: req.user.id}, function(err, contact) {
 			if(err) {
 				res.send({status: 'error'});
 			}
@@ -203,7 +202,7 @@ function contactfn(req, res) {
 
 function billfn(req, res) {
 	if (req.route.method == 'get') {
-		db.Bill.find({owner_email: req.user.email}, function(err, bill) {
+		db.Bill.find({owner_email: 'req.user.email'}, function(err, bill) {
 			res.send(bill);
 		});
 	}
