@@ -35,13 +35,13 @@ function fonenode(path, method, headers, data, request, response, callback) {
 
 function indexfn(req, res) {
 
-	// if(req.loggedIn) {
-	// 	res.sendfile('template/index.html', {});
-	// }
-	// else {
-	// 	res.sendfile('template/login.html', {});
-	// }
-	res.sendfile('template/index.html', {});
+	if(req.loggedIn) {
+		res.sendfile('template/index.html', {});
+	}
+	else {
+		res.sendfile('template/login.html', {});
+	}
+	//res.sendfile('template/index.html', {});
 };
 
 
