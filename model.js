@@ -22,7 +22,7 @@ exports.db = mongoose.connection;
 var contactSchema = mongoose.Schema({
 	first_name: String,
 	last_name: String,
-	owner_email: String,
+	owner_id: String,
 	mobile_number: String
 });
 

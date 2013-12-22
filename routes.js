@@ -58,8 +58,8 @@ function messagefn(req, res) {
 			});
 		}
 		else if (type == 'inbox') {
-			//db.Message.find({receiver_mobile_number: 'req.user.mobile_number'}, 'text', function(err, message) {
-			db.Message.find({receiver_mobile_number: '08066595064'}, function(err, message) {
+			db.Message.find({receiver_mobile_number: req.user.mobile_number}, 'text', function(err, message) {
+			//db.Message.find({receiver_mobile_number: '08066595064'}, function(err, message) {
 				if (err) console.log(err);
 				console.log(message);
 				console.log('message');
@@ -135,7 +135,7 @@ function messagefn(req, res) {
 
 function contactfn(req, res) {
 	if (req.route.method == 'get') {
-		db.Contact.find({owner_email: 'req.user.email'}, function(err, contact) {
+		db.Contact.find({owner_id: req.user.id}, function(err, contact) {
 			res.send(contact);
 		});
 	}
@@ -147,7 +147,7 @@ function contactfn(req, res) {
 
 
 		if (first_name && last_name && mobile_number) {
-			var contact = new db.Contact({first_name: req.param('first_name'), last_name: req.param('last_name'), mobile_number: req.param('mobile_number'), owner_email: 'req.user.email' });
+			var contact = new db.Contact({first_name: req.param('first_name'), last_name: req.param('last_name'), mobile_number: req.param('mobile_number'), owner_id: 'req.user.email' });
 			contact.save(function(err, contact) {
 				if (err) {
 					res.send({status: 'error'});
@@ -202,7 +202,7 @@ function contactfn(req, res) {
 
 function billfn(req, res) {
 	if (req.route.method == 'get') {
-		db.Bill.find({owner_email: 'req.user.email'}, function(err, bill) {
+		db.Bill.find({owner_id: req.user.id}, function(err, bill) {
 			res.send(bill);
 		});
 	}
@@ -215,7 +215,7 @@ function billfn(req, res) {
 		var message_text = req.param('message_text');
 
 		if (cost && recipient_last_name && recipient_first_name && recipient_mobile_number && message_text) {
-			var bill = new db.Bill({owner_email: req.user.email, cost: cost, recipient_mobile_number: recipient_mobile_number, recipient_first_name: recipient_first_name, recipient_last_name: recipient_last_name, message_text: message_text, created: new Date() });
+			var bill = new db.Bill({owner_id: req.user.id, cost: cost, recipient_mobile_number: recipient_mobile_number, recipient_first_name: recipient_first_name, recipient_last_name: recipient_last_name, message_text: message_text, created: new Date() });
 			contact.save(function(err, contact) {
 				if (err) {
 					res.send({status: 'error'});
