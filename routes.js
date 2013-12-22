@@ -147,7 +147,7 @@ function contactfn(req, res) {
 
 
 		if (first_name && last_name && mobile_number) {
-			var contact = new db.Contact({first_name: req.param('first_name'), last_name: req.param('last_name'), mobile_number: req.param('mobile_number'), owner_id: 'req.user.email' });
+			var contact = new db.Contact({first_name: req.param('first_name'), last_name: req.param('last_name'), mobile_number: req.param('mobile_number'), owner_id: req.user.id });
 			contact.save(function(err, contact) {
 				if (err) {
 					res.send({status: 'error'});
